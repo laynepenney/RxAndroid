@@ -8,7 +8,7 @@
         android:theme="@style/AppTheme"
         android:label="@string/app_name">
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".AutoUnsubscribeActivity"
                   android:label="Rx Sample">
 
             <intent-filter>
