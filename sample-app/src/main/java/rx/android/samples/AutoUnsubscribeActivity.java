@@ -58,13 +58,13 @@ public class AutoUnsubscribeActivity extends RxActivity {
     @Override protected void onPause() {
         super.onPause();
         // Should still be subscribed
-        Log.d(TAG, "unsubscribed? " + subscription.isUnsubscribed());
+        Log.d(TAG, "onPause unsubscribed? " + subscription.isUnsubscribed());
     }
 
     @Override protected void onStop() {
         super.onStop();
         // Should be unsubscribed
-        Log.d(TAG, "unsubscribed? " + subscription.isUnsubscribed());
+        Log.d(TAG, "onStop unsubscribed? " + subscription.isUnsubscribed());
     }
 
     @Override protected void onDestroy() {
