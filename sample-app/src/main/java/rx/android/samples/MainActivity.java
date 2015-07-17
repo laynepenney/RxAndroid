@@ -1,22 +1,23 @@
 package rx.android.samples;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
 import android.view.View;
+
 import java.util.concurrent.TimeUnit;
+
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
+import rx.android.lifecycle.LifecycleEvent;
 import rx.android.schedulers.HandlerScheduler;
 import rx.exceptions.OnErrorThrowable;
 import rx.functions.Func0;
 
 import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
 
-public class MainActivity extends Activity {
+public class MainActivity extends RxActivity {
     private static final String TAG = "RxAndroidSamples";
 
     private Handler backgroundHandler;
@@ -38,11 +39,12 @@ public class MainActivity extends Activity {
     }
 
     void onRunSchedulerExampleButtonClicked() {
-        sampleObservable()
-                // Run on a background thread
+        subscriptions().with(sampleObservable())
                 .subscribeOn(HandlerScheduler.from(backgroundHandler))
+                // Observe until Stop
+                .observeUntil(LifecycleEvent.STOP)
                 // Be notified on the main thread
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOnMainThread()
                 .subscribe(new Subscriber<String>() {
                     @Override public void onCompleted() {
                         Log.d(TAG, "onCompleted()");
